@@ -133,7 +133,7 @@ type PointerProps = {
   isActive: boolean;
 };
 
-function Pointer({ vec = new THREE.Vector3(0, 0, 10), isActive }: PointerProps) {
+function Pointer({ vec = new THREE.Vector3(0, 0, 10) }: PointerProps) {
   const ref = useRef<RapierRigidBody>(null);
 
   useFrame(({ pointer, viewport }) => {
