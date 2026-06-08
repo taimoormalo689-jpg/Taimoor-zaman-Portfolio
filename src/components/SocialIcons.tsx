@@ -59,7 +59,7 @@ const SocialIcons = () => {
       <div className="social-icons" data-cursor="icons" id="social">
         <span>
           <a
-            href="https://github.com/taimoor-aidev"
+            href="https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio"
             target="_blank"
             rel="noreferrer"
           >
@@ -78,7 +78,7 @@ const SocialIcons = () => {
       </div>
       <a
         className="resume-button"
-        href="/Taimoor_Zaman.pdf"
+        href="/Taimoor_Resume.pdf"
         target="_blank"
         rel="noreferrer"
       >

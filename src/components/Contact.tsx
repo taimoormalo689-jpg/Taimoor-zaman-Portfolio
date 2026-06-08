@@ -5,30 +5,32 @@ const Contact = () => {
   return (
     <div className="contact-section section-container" id="contact">
       <div className="contact-container">
-        <h3>Get In Touch</h3>
+        <h3 style={{ marginBottom: "40px" }}>Contact</h3>
+        
         <div className="contact-flex">
+          {/* Column 1: Connect & Education */}
           <div className="contact-box">
-            <h4>Let's connect</h4>
-            <p style={{ lineHeight: "1.6", color: "#ccc", marginBottom: "20px" }}>
-              Have a project in mind or want to automate your business processes with AI?
-              Whether you need an AI agent, RAG system, or custom automation workflow —
-              I'd love to help. Let's build something intelligent together!
-            </p>
-            <h4>Direct</h4>
+            <h4>Connect</h4>
             <p>
-              <a
-                href="mailto:taimoorzaman.456@gmail.com"
-                data-cursor="disable"
-              >
+              <a href="mailto:taimoorzaman.456@gmail.com" data-cursor="disable">
                 taimoorzaman.456@gmail.com
               </a>
             </p>
             <p>+92-331-555-8803</p>
+            <p>Pakistan</p>
+            <p style={{ marginTop: "20px" }}>LinkedIn — taimoor-aidev</p>
+
+            <h4 style={{ marginTop: "40px" }}>Education</h4>
+            <p style={{ color: "#ccc", fontSize: "14px" }}>
+              BS Computer Science, COMSATS University Islamabad
+            </p>
           </div>
+
+          {/* Column 2: Social */}
           <div className="contact-box">
             <h4>Social</h4>
             <a
-              href="https://github.com/taimoor-aidev"
+              href="https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio"
               target="_blank"
               rel="noreferrer"
               data-cursor="disable"
@@ -46,6 +48,8 @@ const Contact = () => {
               LinkedIn <MdArrowOutward />
             </a>
           </div>
+
+          {/* Column 3: Copyright */}
           <div className="contact-box">
             <h2>
               Designed and Developed <br /> by <span>Taimoor Zaman</span>

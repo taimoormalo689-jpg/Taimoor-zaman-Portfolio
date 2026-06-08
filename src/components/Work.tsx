@@ -5,47 +5,110 @@ import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
 const projects = [
   {
-    title: "Multi-Agentic AI System",
+    title: "Autonomous Multi-Agent Swarm",
     category: "Workflow Orchestration",
     tools: "LangGraph, LangChain, Python",
-    image: "/images/multiagent.png",
-    link: "https://github.com/taimoor-aidev",
+    image: "/images/ai_dashboard_1_1780940886565.png",
+    link: "https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio",
   },
   {
-    title: "WhatsApp AI Automation",
-    category: "Appointment Booking System",
-    tools: "n8n, Meta API, Python",
-    image: "/images/whatsapp_ai.png",
-    link: "https://github.com/taimoor-aidev",
+    title: "Enterprise RAG & Knowledge Pipeline",
+    category: "Vector Search & Document Q&A",
+    tools: "Pinecone, FastAPI, OpenAI",
+    image: "/images/ai_dashboard_2_1780940901270.png",
+    link: "https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio",
   },
   {
-    title: "AI Voice Calling Agent",
+    title: "n8n Complex Workflow Engine",
+    category: "Business Process Automation",
+    tools: "n8n, Node.js, Webhooks",
+    image: "/images/ai_dashboard_3_1780940914087.png",
+    link: "https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio",
+  },
+  {
+    title: "Computer Vision QA System",
+    category: "Real-time Defect Detection",
+    tools: "YOLOv8, OpenCV, FastAPI",
+    image: "/images/ai_dashboard_4_1780940927131.png",
+    link: "https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio",
+  },
+  {
+    title: "Real-Time AI Voice Agent",
     category: "Inbound & Outbound Voice AI",
     tools: "Vapi, ElevenLabs, Twilio",
-    image: "/images/voice_agent.png",
-    link: "https://github.com/taimoor-aidev",
+    image: "/images/ai_dashboard_1_1780940886565.png",
+    link: "https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio",
   },
   {
-    title: "AI Content Automation",
+    title: "LLM-Powered Predictive CRM Analytics",
+    category: "Salesforce Automation",
+    tools: "Python, Pandas, OpenAI",
+    image: "/images/ai_dashboard_2_1780940901270.png",
+    link: "https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio",
+  },
+  {
+    title: "Automated Video Synthesis Engine",
+    category: "Video Processing Pipeline",
+    tools: "Runway API, n8n, Python",
+    image: "/images/ai_dashboard_3_1780940914087.png",
+    link: "https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio",
+  },
+  {
+    title: "AI Cold Email & Sales Automator",
+    category: "Cold Email Personalization",
+    tools: "GPT-4, n8n, SMTP",
+    image: "/images/ai_dashboard_4_1780940927131.png",
+    link: "https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio",
+  },
+  {
+    title: "Healthcare Compliance AI Assistant",
+    category: "HIPAA-compliant Chat Agent",
+    tools: "AWS Bedrock, LangChain",
+    image: "/images/ai_dashboard_1_1780940886565.png",
+    link: "https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio",
+  },
+  {
+    title: "Financial Document Parsing OCR",
+    category: "PDF Parsing & Analysis",
+    tools: "LlamaParse, FastAPI, SQL",
+    image: "/images/ai_dashboard_2_1780940901270.png",
+    link: "https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio",
+  },
+  {
+    title: "Generative AI Social Media Automator",
     category: "Social Media & Blogs",
     tools: "n8n, OpenAI, Google Drive",
-    image: "/images/content_automation.png",
-    link: "https://github.com/taimoor-aidev",
+    image: "/images/ai_dashboard_3_1780940914087.png",
+    link: "https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio",
   },
   {
-    title: "AI Podcast-to-Viral Clips",
-    category: "Video Processing Pipeline",
-    tools: "Gemini, n8n, LLM",
-    image: "/images/podcast_clips.png",
-    link: "https://github.com/taimoor-aidev",
+    title: "WhatsApp AI Appointment Booker",
+    category: "Appointment Booking System",
+    tools: "n8n, Meta API, Python",
+    image: "/images/ai_dashboard_4_1780940927131.png",
+    link: "https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio",
   },
   {
-    title: "AI Video Generation Workflow",
-    category: "Automated Video Production",
-    tools: "n8n, Runway API, Python",
-    image: "/images/video_gen.png",
-    link: "https://github.com/taimoor-aidev",
+    title: "Real-Time Speech-to-Speech",
+    category: "Multi-Language Translator",
+    tools: "Whisper, ElevenLabs, React",
+    image: "/images/ai_dashboard_1_1780940886565.png",
+    link: "https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio",
   },
+  {
+    title: "E-commerce AI Recommender",
+    category: "Machine Learning & Analytics",
+    tools: "TensorFlow, Python, AWS",
+    image: "/images/ai_dashboard_2_1780940901270.png",
+    link: "https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio",
+  },
+  {
+    title: "Custom LLM Fine-Tuning & Deploy",
+    category: "LLMOps & MLOps",
+    tools: "HuggingFace, Docker, AWS",
+    image: "/images/ai_dashboard_3_1780940914087.png",
+    link: "https://github.com/taimoormalo689-jpg/Taimoor-zaman-Portfolio",
+  }
 ];
 
 const Work = () => {
@@ -140,17 +203,35 @@ const Work = () => {
           </div>
 
           {/* Dot Indicators */}
-          <div className="carousel-dots">
-            {projects.map((_, index) => (
-              <button
-                key={index}
-                className={`carousel-dot ${index === currentIndex ? "carousel-dot-active" : ""
-                  }`}
-                onClick={() => goToSlide(index)}
-                aria-label={`Go to project ${index + 1}`}
-                data-cursor="disable"
-              />
-            ))}
+          <div className="carousel-dots-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginTop: '35px' }}>
+            <button
+              onClick={goToPrev}
+              aria-label="Previous project"
+              data-cursor="disable"
+              className="carousel-dot-arrow"
+            >
+              <MdArrowBack />
+            </button>
+            <div className="carousel-dots" style={{ marginTop: 0 }}>
+              {projects.map((_, index) => (
+                <button
+                  key={index}
+                  className={`carousel-dot ${index === currentIndex ? "carousel-dot-active" : ""
+                    }`}
+                  onClick={() => goToSlide(index)}
+                  aria-label={`Go to project ${index + 1}`}
+                  data-cursor="disable"
+                />
+              ))}
+            </div>
+            <button
+              onClick={goToNext}
+              aria-label="Next project"
+              data-cursor="disable"
+              className="carousel-dot-arrow"
+            >
+              <MdArrowForward />
+            </button>
           </div>
         </div>
       </div>

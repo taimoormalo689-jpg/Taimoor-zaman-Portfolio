@@ -1,8 +1,29 @@
 import { useEffect, useState } from "react";
 import "./styles/Loading.css";
 import { useLoading } from "../context/LoadingProvider";
-
 import Marquee from "react-fast-marquee";
+
+const topMarqueeItems = [
+  { text: "AI AUTOMATION ENGINEER", cls: "kw-cyan" },
+  { text: "GENERATIVE AI", cls: "kw-purple" },
+  { text: "MULTI-AGENT SYSTEMS", cls: "kw-coral" },
+  { text: "n8n WORKFLOWS", cls: "kw-white" },
+  { text: "LangChain", cls: "kw-green" },
+  { text: "COMPUTER VISION", cls: "kw-cyan" },
+  { text: "LangGraph", cls: "kw-purple" },
+  { text: "RAG PIPELINES", cls: "kw-coral" },
+];
+
+const bottomMarqueeItems = [
+  { text: "COMPUTER VISION", cls: "kw-cyan" },
+  { text: "AI AUTOMATION ENGINEER", cls: "kw-purple" },
+  { text: "GENERATIVE AI", cls: "kw-coral" },
+  { text: "MULTI-AGENT SYSTEMS", cls: "kw-white" },
+  { text: "FastAPI", cls: "kw-green" },
+  { text: "PyTorch", cls: "kw-cyan" },
+  { text: "VOICE AGENTS", cls: "kw-purple" },
+  { text: "PYTHON", cls: "kw-coral" },
+];
 
 const Loading = ({ percent }: { percent: number }) => {
   const { setIsLoading } = useLoading();
@@ -46,7 +67,7 @@ const Loading = ({ percent }: { percent: number }) => {
     <>
       <div className="loading-header">
         <a href="/#" className="loader-title" data-cursor="disable">
-          AM
+          TZ.ai
         </a>
         <div className={`loaderGame ${clicked && "loader-out"}`}>
           <div className="loaderGame-container">
@@ -60,12 +81,19 @@ const Loading = ({ percent }: { percent: number }) => {
         </div>
       </div>
       <div className="loading-screen">
-        <div className="loading-marquee">
-          <Marquee>
-            <span> Full Stack Developer</span> <span>Software Engineer</span>
-            <span> Full Stack Developer</span> <span>Software Engineer</span>
+
+        {/* Top scrolling marquee */}
+        <div className="loading-marquee loading-marquee-top">
+          <Marquee speed={60}>
+            {topMarqueeItems.map((item, i) => (
+              <span key={i} className={item.cls}>
+                {item.text} &bull;&nbsp;
+              </span>
+            ))}
           </Marquee>
         </div>
+
+        {/* Center loading pill */}
         <div
           className={`loading-wrap ${clicked && "loading-clicked"}`}
           onMouseMove={(e) => handleMouseMove(e)}
@@ -81,10 +109,22 @@ const Loading = ({ percent }: { percent: number }) => {
               <div className="loading-box"></div>
             </div>
             <div className="loading-content2">
-              <span>Welcome</span>
+              <span>Enter</span>
             </div>
           </div>
         </div>
+
+        {/* Bottom scrolling marquee */}
+        <div className="loading-marquee loading-marquee-bottom">
+          <Marquee speed={50} direction="right">
+            {bottomMarqueeItems.map((item, i) => (
+              <span key={i} className={item.cls}>
+                {item.text} &bull;&nbsp;
+              </span>
+            ))}
+          </Marquee>
+        </div>
+
       </div>
     </>
   );
@@ -103,12 +143,13 @@ export const setProgress = (setLoading: (value: number) => void) => {
     } else {
       clearInterval(interval);
       interval = setInterval(() => {
-        percent = percent + Math.round(Math.random());
-        setLoading(percent);
-        if (percent > 91) {
+        if (percent < 90) {
+          percent = percent + Math.round(Math.random());
+          setLoading(percent);
+        } else {
           clearInterval(interval);
         }
-      }, 2000);
+      }, 50);
     }
   }, 100);
 

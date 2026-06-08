@@ -43,7 +43,7 @@ const Navbar = () => {
     <>
       <div className="header">
         <a href="/#" className="navbar-title" data-cursor="disable">
-          TZ
+          TZ.ai
         </a>
         <a
           href="https://www.linkedin.com/in/taimoor-aidev/"

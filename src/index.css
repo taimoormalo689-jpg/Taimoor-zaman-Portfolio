@@ -110,7 +110,7 @@ body {
   height: var(--vh);
   margin: auto;
   margin-top: 50px;
-  margin-bottom: -100px;
+  margin-bottom: 50px;
 }
 
 .techstack h2 {
@@ -122,6 +122,17 @@ body {
   left: 0;
   font-weight: 400;
   text-transform: uppercase;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.tech-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
 @media screen and (min-width: 768px) {
@@ -134,4 +145,66 @@ body {
   .techstack h2 {
     font-size: 40px;
   }
+}
+
+.terminal-container {
+  width: 90%;
+  max-width: 800px;
+  background-color: rgba(10, 14, 23, 0.85);
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: rgba(15, 23, 42, 0.9);
+  border-bottom: 1px solid #1e293b;
+}
+
+.terminal-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.terminal-buttons span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.terminal-buttons .close { background-color: #ef4444; }
+.terminal-buttons .minimize { background-color: #eab308; }
+.terminal-buttons .maximize { background-color: #22c55e; }
+
+.terminal-title {
+  flex: 1;
+  text-align: center;
+  font-family: monospace;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.terminal-body {
+  padding: 20px;
+  font-family: monospace;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #e2e8f0;
+}
+
+.terminal-prompt {
+  color: #38bdf8;
+  font-weight: bold;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
