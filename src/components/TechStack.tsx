@@ -172,6 +172,8 @@ const terminalLines = [
 ];
 
 const TechStack = () => {
+  const isMobile = window.innerWidth < 768;
+  const sphereCount = isMobile ? 15 : 30;
   const [isActive, setIsActive] = useState(false);
   const [typedLines, setTypedLines] = useState(0);
   const [currentText, setCurrentText] = useState("");
@@ -237,13 +239,13 @@ const TechStack = () => {
   }, []);
 
   return (
-    <div className="techstack-section" style={{ width: "100%", position: "relative", marginBottom: "100px", marginTop: "50px" }}>
+    <div className="techstack-section" style={{ width: "100%", position: "relative", marginBottom: "60px", marginTop: "50px" }}>
       <h2 style={{ 
         background: "linear-gradient(to bottom, #ffffff 20%, #5eead4 100%)", 
         WebkitBackgroundClip: "text", 
         WebkitTextFillColor: "transparent", 
-        letterSpacing: "5px", 
-        fontSize: "80px", 
+        letterSpacing: isMobile ? "2px" : "5px", 
+        fontSize: isMobile ? "clamp(30px, 10vw, 60px)" : "80px", 
         textAlign: "center", 
         textTransform: "uppercase", 
         fontWeight: 400, 
@@ -254,7 +256,7 @@ const TechStack = () => {
         pointerEvents: "none" 
       }}>My Techstack</h2>
       <div 
-        style={{ height: "60vh", width: "100%", position: "relative", overflow: "visible", marginTop: "80px" }}
+        style={{ height: isMobile ? "50vw" : "60vh", width: "100%", position: "relative", overflow: "visible", marginTop: isMobile ? "50px" : "80px" }}
         onPointerEnter={() => { pointerActive.value = true; }}
         onPointerLeave={() => { pointerActive.value = false; }}
       >
@@ -278,7 +280,7 @@ const TechStack = () => {
           <directionalLight position={[0, 5, -4]} intensity={2} />
           <Physics gravity={[0, 0, 0]}>
             <Pointer isActive={isActive} />
-            {spheres.map((props, i) => (
+            {spheres.slice(0, sphereCount).map((props, i) => (
               <SphereGeo
                 key={i}
                 {...props}
