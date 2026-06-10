@@ -100,12 +100,16 @@ function SphereGeo({
     if (!api.current) return;
     delta = Math.min(0.05, delta);
     const t = api.current.translation();
-    // Strong pull back to exact home position every frame
-    const strength = isActive ? 60 : 80;
+    
+    // If not active, homeY is way down so they hide at the bottom
+    const targetY = isActive ? homeY : -30;
+    
+    // Pull back to exact home position every frame
+    const strength = 30; // balanced strength for smooth return
     api.current.applyImpulse(
       {
         x: (homeX - t.x) * strength * delta,
-        y: (homeY - t.y) * strength * delta,
+        y: (targetY - t.y) * strength * delta,
         z: (homeZ - t.z) * strength * delta,
       },
       true
@@ -114,10 +118,10 @@ function SphereGeo({
 
   return (
     <RigidBody
-      linearDamping={15}
-      angularDamping={5}
+      linearDamping={4} // lower damping so they can be thrown by the mouse
+      angularDamping={2}
       friction={0.1}
-      position={[homeX, homeY, homeZ]}
+      position={[homeX, -30, homeZ]} // start at the bottom
       ref={api}
       colliders={false}
     >
@@ -129,19 +133,6 @@ function SphereGeo({
         geometry={sphereGeometry}
         material={material}
         rotation={[0.3, 1, 1]}
-        onPointerEnter={() => {
-          if (!api.current) return;
-          // Get current velocity to add to impulse for mouse-speed matching
-          const vel = api.current.linvel();
-          api.current.applyImpulse(
-            {
-              x: (Math.random() - 0.5) * 40 + vel.x * 0.5,
-              y: (Math.random() - 0.5) * 40 + vel.y * 0.5,
-              z: (Math.random() - 0.5) * 20,
-            },
-            true
-          );
-        }}
       />
     </RigidBody>
   );
@@ -164,8 +155,8 @@ function Pointer({ vec = new THREE.Vector3(0, 0, 10) }: PointerProps) {
         )
       : new THREE.Vector3(0, 0, 10);
 
-    // lerp 0.5 = very fast pointer tracking
-    const currentTarget = vec.lerp(targetVec, 0.5);
+    // Fast pointer tracking so it hits the balls hard
+    const currentTarget = vec.lerp(targetVec, 0.4);
     ref.current?.setNextKinematicTranslation(currentTarget);
   });
 
@@ -176,7 +167,7 @@ function Pointer({ vec = new THREE.Vector3(0, 0, 10) }: PointerProps) {
       colliders={false}
       ref={ref}
     >
-      <BallCollider args={[3]} />
+      <BallCollider args={[3.5]} />
     </RigidBody>
   );
 }
