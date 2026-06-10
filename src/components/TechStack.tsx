@@ -100,15 +100,20 @@ function SphereGeo({
     delta = Math.min(0.05, delta);
     const t = api.current.translation();
     
-    // If not active, homeY is way down so they hide at the bottom
+    // If not active, target is way down. If active, target is home position.
     const targetY = isActive ? homeY : -30;
+    
+    // Calculate distance to target
+    const dy = targetY - t.y;
+    // Cap the maximum vertical speed so they float up smoothly instead of blinking/teleporting
+    const limitedDy = Math.sign(dy) * Math.min(Math.abs(dy), 4);
     
     // Pull back to exact home position every frame
     const strength = 30; // balanced strength for smooth return
     api.current.applyImpulse(
       {
         x: (homeX - t.x) * strength * delta,
-        y: (targetY - t.y) * strength * delta,
+        y: limitedDy * strength * delta,
         z: (homeZ - t.z) * strength * delta,
       },
       true
