@@ -136,9 +136,8 @@ export function setAllTimeline() {
   const careerTimeline = gsap.timeline({
     scrollTrigger: {
       trigger: ".career-section",
-      start: "top 30%",
-      end: "100% center",
-      scrub: true,
+      start: "top 60%",
+      toggleActions: "play reverse play reverse",
       invalidateOnRefresh: true,
     },
   });

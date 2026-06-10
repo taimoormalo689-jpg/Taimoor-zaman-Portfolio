@@ -83,30 +83,31 @@ function SphereGeo({
   scale,
   r = THREE.MathUtils.randFloatSpread,
   material,
+  isActive,
 }: SphereProps) {
   const api = useRef<RapierRigidBody | null>(null);
 
+  const [hovered, setHovered] = useState(false);
+
   useFrame((_state, delta) => {
+    if (!isActive) return;
     delta = Math.min(0.1, delta);
+    // Apply a very gentle force towards the center so they don't drift away forever
+    const translation = api.current!.translation();
     const impulse = vec
-      .copy(api.current!.translation())
-      .normalize()
-      .multiply(
-        new THREE.Vector3(
-          -80 * delta * scale,
-          -80 * delta * scale,
-          -80 * delta * scale
-        )
-      );
+      .copy(translation)
+      .negate()
+      .multiplyScalar(2 * delta * scale); // gentle return force
+
     api.current?.applyImpulse(impulse, true);
   });
 
   return (
     <RigidBody
-      linearDamping={0.8}
-      angularDamping={0.2}
+      linearDamping={4}
+      angularDamping={1}
       friction={0.2}
-      position={[r(4), r(4), r(4)]}
+      position={[r(20), r(20) - 25, r(20) - 10]}
       ref={api}
       colliders={false}
     >
@@ -123,6 +124,17 @@ function SphereGeo({
         geometry={sphereGeometry}
         material={material}
         rotation={[0.3, 1, 1]}
+        onPointerEnter={() => {
+          setHovered(true);
+          // Apply an upward/outward impulse when hovered
+          const hoverImpulse = new THREE.Vector3(
+            (Math.random() - 0.5) * 10,
+            Math.random() * 10 + 5,
+            (Math.random() - 0.5) * 10
+          ).multiplyScalar(scale);
+          api.current?.applyImpulse(hoverImpulse, true);
+        }}
+        onPointerLeave={() => setHovered(false)}
       />
     </RigidBody>
   );
