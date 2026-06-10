@@ -65,8 +65,12 @@ const textures = skills.map((skill, index) => {
 
 const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
 
+// Each sphere has a fixed home position so they stay still and snap back
 const spheres = [...Array(30)].map(() => ({
-  scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
+  scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)] as number,
+  homeX: THREE.MathUtils.randFloatSpread(14),
+  homeY: THREE.MathUtils.randFloatSpread(9),
+  homeZ: THREE.MathUtils.randFloatSpread(3),
 }));
 
 // Shared mutable ref — pointer active flag
@@ -75,48 +79,49 @@ const pointerActive = { value: false };
 type SphereProps = {
   vec?: THREE.Vector3;
   scale: number;
-  r?: typeof THREE.MathUtils.randFloatSpread;
+  homeX: number;
+  homeY: number;
+  homeZ: number;
   material: THREE.MeshPhysicalMaterial;
   isActive: boolean;
 };
 
 function SphereGeo({
-  vec = new THREE.Vector3(),
   scale,
-  r = THREE.MathUtils.randFloatSpread,
+  homeX,
+  homeY,
+  homeZ,
   material,
   isActive,
 }: SphereProps) {
   const api = useRef<RapierRigidBody | null>(null);
 
   useFrame((_state, delta) => {
-    if (!isActive) return;
-    delta = Math.min(0.1, delta);
-    // Apply a very gentle force towards the center so they don't drift away forever
-    const translation = api.current!.translation();
-    const impulse = vec
-      .copy(translation)
-      .negate()
-      .multiplyScalar(2 * delta * scale); // gentle return force
-
-    api.current?.applyImpulse(impulse, true);
+    if (!api.current) return;
+    delta = Math.min(0.05, delta);
+    const t = api.current.translation();
+    // Strong pull back to exact home position every frame
+    const strength = isActive ? 60 : 80;
+    api.current.applyImpulse(
+      {
+        x: (homeX - t.x) * strength * delta,
+        y: (homeY - t.y) * strength * delta,
+        z: (homeZ - t.z) * strength * delta,
+      },
+      true
+    );
   });
 
   return (
     <RigidBody
-      linearDamping={3}
-      angularDamping={0.5}
+      linearDamping={15}
+      angularDamping={5}
       friction={0.1}
-      position={[r(8), r(8), r(4)]}
+      position={[homeX, homeY, homeZ]}
       ref={api}
       colliders={false}
     >
       <BallCollider args={[scale]} />
-      <CylinderCollider
-        rotation={[Math.PI / 2, 0, 0]}
-        position={[0, 0, 1.2 * scale]}
-        args={[0.15 * scale, 0.275 * scale]}
-      />
       <mesh
         castShadow
         receiveShadow
@@ -125,13 +130,17 @@ function SphereGeo({
         material={material}
         rotation={[0.3, 1, 1]}
         onPointerEnter={() => {
-          // Strong, fast scatter impulse on hover
-          const hoverImpulse = new THREE.Vector3(
-            (Math.random() - 0.5) * 30,
-            (Math.random() - 0.5) * 30,
-            (Math.random() - 0.5) * 15
-          ).multiplyScalar(scale);
-          api.current?.applyImpulse(hoverImpulse, true);
+          if (!api.current) return;
+          // Get current velocity to add to impulse for mouse-speed matching
+          const vel = api.current.linvel();
+          api.current.applyImpulse(
+            {
+              x: (Math.random() - 0.5) * 40 + vel.x * 0.5,
+              y: (Math.random() - 0.5) * 40 + vel.y * 0.5,
+              z: (Math.random() - 0.5) * 20,
+            },
+            true
+          );
         }}
       />
     </RigidBody>
