@@ -11,16 +11,7 @@ import {
   RapierRigidBody,
 } from "@react-three/rapier";
 
-const imageUrls = [
-  "/images/javascript.webp",
-  "/images/typescript.webp",
-  "/images/react2.webp",
-  "/images/node.webp",
-  "/images/express.webp",
-  "/images/mongo.webp",
-  "/images/mysql.webp",
-  "/images/next.webp",
-];
+
 
 const skills = [
   "Python",
@@ -98,8 +89,6 @@ function SphereGeo({
 }: SphereProps) {
   const api = useRef<RapierRigidBody | null>(null);
 
-  const [hovered, setHovered] = useState(false);
-
   useFrame((_state, delta) => {
     if (!isActive) return;
     delta = Math.min(0.1, delta);
@@ -136,7 +125,6 @@ function SphereGeo({
         material={material}
         rotation={[0.3, 1, 1]}
         onPointerEnter={() => {
-          setHovered(true);
           // Apply an upward/outward impulse when hovered
           const hoverImpulse = new THREE.Vector3(
             (Math.random() - 0.5) * 10,
@@ -145,7 +133,6 @@ function SphereGeo({
           ).multiplyScalar(scale);
           api.current?.applyImpulse(hoverImpulse, true);
         }}
-        onPointerLeave={() => setHovered(false)}
       />
     </RigidBody>
   );
