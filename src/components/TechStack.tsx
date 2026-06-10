@@ -64,12 +64,12 @@ const textures = skills.map((skill, index) => {
 
 const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
 
-// Each sphere has a fixed home position so they stay still and snap back
+// Each sphere has a fixed home position tightly clustered under the text
 const spheres = [...Array(30)].map(() => ({
   scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)] as number,
-  homeX: THREE.MathUtils.randFloatSpread(14),
-  homeY: THREE.MathUtils.randFloatSpread(9),
-  homeZ: THREE.MathUtils.randFloatSpread(3),
+  homeX: THREE.MathUtils.randFloatSpread(8), // Tight X cluster
+  homeY: THREE.MathUtils.randFloatSpread(4) - 2, // Tight Y cluster below center
+  homeZ: THREE.MathUtils.randFloatSpread(2),
 }));
 
 // Shared mutable ref — pointer active flag
@@ -101,15 +101,15 @@ function SphereGeo({
     const t = api.current.translation();
     
     // If not active, target is way down. If active, target is home position.
-    const targetY = isActive ? homeY : -30;
+    const targetY = isActive ? homeY : -20;
     
     // Calculate distance to target
     const dy = targetY - t.y;
-    // Cap the maximum vertical speed so they float up smoothly instead of blinking/teleporting
-    const limitedDy = Math.sign(dy) * Math.min(Math.abs(dy), 4);
+    // Cap the vertical speed strictly so they rise smoothly over 2-3 seconds (no blinking)
+    const limitedDy = Math.sign(dy) * Math.min(Math.abs(dy), 2.5);
     
     // Pull back to exact home position every frame
-    const strength = 30; // balanced strength for smooth return
+    const strength = 30; // balanced strength
     api.current.applyImpulse(
       {
         x: (homeX - t.x) * strength * delta,
