@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { EffectComposer, N8AO } from "@react-three/postprocessing";
 import {
   BallCollider,
   Physics,
@@ -290,6 +289,7 @@ const TechStack = () => {
         {webGLAvailable ? (
           <Canvas
             shadows
+            dpr={[1, 1.5]}
             gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
             camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
             onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
@@ -317,9 +317,6 @@ const TechStack = () => {
                 />
               ))}
             </Physics>
-            <EffectComposer enableNormalPass={false}>
-              <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
-            </EffectComposer>
           </Canvas>
         ) : (
           <div style={{
