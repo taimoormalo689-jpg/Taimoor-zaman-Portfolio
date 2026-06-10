@@ -104,10 +104,10 @@ function SphereGeo({
 
   return (
     <RigidBody
-      linearDamping={4}
-      angularDamping={1}
-      friction={0.2}
-      position={[r(20), r(20) - 25, r(20) - 10]}
+      linearDamping={3}
+      angularDamping={0.5}
+      friction={0.1}
+      position={[r(8), r(8), r(4)]}
       ref={api}
       colliders={false}
     >
@@ -125,11 +125,11 @@ function SphereGeo({
         material={material}
         rotation={[0.3, 1, 1]}
         onPointerEnter={() => {
-          // Apply an upward/outward impulse when hovered
+          // Strong, fast scatter impulse on hover
           const hoverImpulse = new THREE.Vector3(
-            (Math.random() - 0.5) * 10,
-            Math.random() * 10 + 5,
-            (Math.random() - 0.5) * 10
+            (Math.random() - 0.5) * 30,
+            (Math.random() - 0.5) * 30,
+            (Math.random() - 0.5) * 15
           ).multiplyScalar(scale);
           api.current?.applyImpulse(hoverImpulse, true);
         }}
@@ -153,9 +153,10 @@ function Pointer({ vec = new THREE.Vector3(0, 0, 10) }: PointerProps) {
           (pointer.y * viewport.height) / 2,
           0
         )
-      : new THREE.Vector3(0, 0, 10); // Smoothly move away towards camera
+      : new THREE.Vector3(0, 0, 10);
 
-    const currentTarget = vec.lerp(targetVec, 0.1);
+    // lerp 0.5 = very fast pointer tracking
+    const currentTarget = vec.lerp(targetVec, 0.5);
     ref.current?.setNextKinematicTranslation(currentTarget);
   });
 

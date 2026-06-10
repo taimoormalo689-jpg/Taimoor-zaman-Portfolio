@@ -136,22 +136,17 @@ export const setProgress = (setLoading: (value: number) => void) => {
   let percent: number = 0;
 
   let interval = setInterval(() => {
-    if (percent <= 80) {
-      let rand = Math.round(Math.random() * 10) + 5;
-      percent = Math.min(percent + rand, 80);
+    if (percent < 70) {
+      let rand = Math.round(Math.random() * 15) + 8;
+      percent = Math.min(percent + rand, 70);
       setLoading(percent);
     } else {
       clearInterval(interval);
-      interval = setInterval(() => {
-        if (percent < 95) {
-          percent = percent + Math.round(Math.random() * 5) + 1;
-          setLoading(percent);
-        } else {
-          clearInterval(interval);
-        }
-      }, 20);
+      // immediately jump to 100
+      setLoading(100);
+      percent = 100;
     }
-  }, 20);
+  }, 15);
 
   function clear() {
     clearInterval(interval);
