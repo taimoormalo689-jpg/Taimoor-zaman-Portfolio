@@ -6,7 +6,7 @@ const About = () => {
       <div className="about-me">
         <h3 className="title">About Me</h3>
         <p className="para">
-          Results-driven Senior AI Developer with 5+ years of hands-on experience designing
+          Results-driven Senior AI Engineer with 5+ years of hands-on experience designing
           and deploying production-grade AI automation systems, LLM-powered applications, and
           multi-agent AI frameworks. Proven expertise in Retrieval-Augmented Generation (RAG),
           AI agent development, and scalable workflow orchestration using n8n, Python, and FastAPI.
