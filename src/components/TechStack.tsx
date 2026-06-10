@@ -11,6 +11,17 @@ import {
   RapierRigidBody,
 } from "@react-three/rapier";
 
+const imageUrls = [
+  "/images/javascript.webp",
+  "/images/typescript.webp",
+  "/images/react2.webp",
+  "/images/node.webp",
+  "/images/express.webp",
+  "/images/mongo.webp",
+  "/images/mysql.webp",
+  "/images/next.webp",
+];
+
 const skills = [
   "Python",
   "TensorFlow",
