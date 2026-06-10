@@ -188,6 +188,19 @@ const TechStack = () => {
   const [typedLines, setTypedLines] = useState(0);
   const [currentText, setCurrentText] = useState("");
 
+  // Check if WebGL is available — some PCs have GPU acceleration disabled
+  const [webGLAvailable] = useState(() => {
+    try {
+      const canvas = document.createElement("canvas");
+      return !!(
+        window.WebGLRenderingContext &&
+        (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
+      );
+    } catch {
+      return false;
+    }
+  });
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
@@ -270,44 +283,68 @@ const TechStack = () => {
         onPointerEnter={() => { pointerActive.value = true; }}
         onPointerLeave={() => { pointerActive.value = false; }}
       >
-        <Canvas
-          shadows
-          gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
-          camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
-          onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
-          className="tech-canvas"
-          style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 1 }}
-        >
-          <ambientLight intensity={1} />
-          <spotLight
-            position={[20, 20, 25]}
-            penumbra={1}
-            angle={0.2}
-            color="white"
-            castShadow
-            shadow-mapSize={[512, 512]}
-          />
-          <directionalLight position={[0, 5, -4]} intensity={2} />
-          <Physics gravity={[0, 0, 0]}>
-            <Pointer isActive={isActive} />
-            {spheres.slice(0, sphereCount).map((props, i) => (
-              <SphereGeo
-                key={i}
-                {...props}
-                material={materials[Math.floor(Math.random() * materials.length)]}
-                isActive={isActive}
-              />
-            ))}
-          </Physics>
-          <Environment
-            files="/models/char_enviorment.hdr"
-            environmentIntensity={0.5}
-            environmentRotation={[0, 4, 2]}
-          />
-          <EffectComposer enableNormalPass={false}>
-            <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
-          </EffectComposer>
-        </Canvas>
+        {webGLAvailable ? (
+          <Canvas
+            shadows
+            gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
+            camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
+            onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
+            className="tech-canvas"
+            style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 1 }}
+          >
+            <ambientLight intensity={1} />
+            <spotLight
+              position={[20, 20, 25]}
+              penumbra={1}
+              angle={0.2}
+              color="white"
+              castShadow
+              shadow-mapSize={[512, 512]}
+            />
+            <directionalLight position={[0, 5, -4]} intensity={2} />
+            <Physics gravity={[0, 0, 0]}>
+              <Pointer isActive={isActive} />
+              {spheres.slice(0, sphereCount).map((props, i) => (
+                <SphereGeo
+                  key={i}
+                  {...props}
+                  material={materials[Math.floor(Math.random() * materials.length)]}
+                  isActive={isActive}
+                />
+              ))}
+            </Physics>
+            <Environment
+              files="/models/char_enviorment.hdr"
+              environmentIntensity={0.5}
+              environmentRotation={[0, 4, 2]}
+            />
+            <EffectComposer enableNormalPass={false}>
+              <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
+            </EffectComposer>
+          </Canvas>
+        ) : (
+          <div style={{
+            position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+            display: "flex", flexWrap: "wrap", gap: "12px",
+            alignItems: "center", justifyContent: "center", padding: "20px", boxSizing: "border-box"
+          }}>
+            {skills.map((skill, i) => {
+              const theme = themes[i % themes.length];
+              return (
+                <span key={i} style={{
+                  background: theme.bg, color: theme.text,
+                  padding: "10px 20px", borderRadius: "50px",
+                  fontWeight: 600, fontSize: "clamp(12px, 2vw, 16px)",
+                  letterSpacing: "1px", boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
+                  transition: "transform 0.2s ease",
+                  cursor: "default",
+                }}>
+                  {skill}
+                </span>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       <div className="terminal-container" style={{ position: "relative", margin: "0 auto", marginTop: "40px", zIndex: 10 }}>
